@@ -9,11 +9,11 @@ import numpy as np
 import pickle
 
 stemmer = LancasterStemmer()
-responses = open("responses.json")
+responses = open("data/responses.json")
 with responses as file:
     responses_loaded = json.load(file)
 try:
-    with open("data.pickle","rb") as data:
+    with open("data/data.pickle","rb") as data:
         words,classes,training,output = pickle.load(data)
 except:
     words = []
@@ -55,7 +55,7 @@ except:
     training = np.array(training)
     output = np.array(output)
 
-    with open("data.pickle","wb") as data:
+    with open("data/data.pickle","wb") as data:
         pickle.dump((words,classes,training,output),data)
 
 tf.compat.v1.reset_default_graph()
@@ -68,12 +68,12 @@ neural_net = tflearn.regression(neural_net)
 # defining the model
 model = tflearn.DNN(neural_net)
 
-#try:
+try:
+    model.load("model/model.tflearn")
+except:
+    model.fit(training,output,n_epoch=2000,batch_size=8,show_metric=True)
+    model.save("model/model.tflearn")
 
-#except:
-model.fit(training,output,n_epoch=2000,batch_size=8,show_metric=True)
-model.save("chatbot_model.tflearn")
-model.load("chatbot_model.tflearn")
 
 # intitialize and return bag of words
 def bagofwords(string,words):
