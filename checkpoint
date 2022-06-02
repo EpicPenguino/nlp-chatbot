@@ -1,0 +1,2 @@
+model_checkpoint_path: "D:\\Documents\\PythonScripts\\ChatbotProject\\model.tflearn"
+all_model_checkpoint_paths: "D:\\Documents\\PythonScripts\\ChatbotProject\\model.tflearn"
